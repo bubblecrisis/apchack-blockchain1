@@ -52,9 +52,8 @@ func (t *SimpleChaincode) Query(stub shim.ChaincodeStubInterface, function strin
 	fmt.Println("query is running " + function)
 
 	// Handle different functions
-	if function == "dummy_query" {											//read a variable
-		fmt.Println("hi there " + function)						//error
-		return nil, nil;
+	if function == "balance" {											//read a variable
+		return t.balance(stub, args)						
 	}
 	fmt.Println("query did not find func: " + function)						//error
 
@@ -62,6 +61,20 @@ func (t *SimpleChaincode) Query(stub shim.ChaincodeStubInterface, function strin
 }
 
 //================================================================================================
+func (t *SimpleChaincode) balance(stub shim.ChaincodeStubInterface, args []string) ([]byte, error) {	
+	var err error
+	if len(args) != 1 {
+		return nil, errors.New("Incorrect number of arguments. Expecting 1")
+	}
+
+	balanceBytes, err := stub.GetState(args[0])
+	if (err != nil) {
+		return nil, errors.New("Error retrieving balance")
+	} else {
+		return balanceBytes, nil
+	}
+}
+
 // args[0] - bucket
 // args[1] - value to add
 func (t *SimpleChaincode) add(stub shim.ChaincodeStubInterface, args []string) ([]byte, error) {
