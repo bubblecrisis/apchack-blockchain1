@@ -23,7 +23,7 @@ func main() {
 
 // Init resets all the things
 func (t *SimpleChaincode) Init(stub shim.ChaincodeStubInterface, function string, args []string) ([]byte, error) {
-	for i := 1; i < len(args); i ++ {
+	for i := 0; i < len(args); i ++ {
 		stub.PutState(args[i], []byte(strconv.Itoa(0)))
 		fmt.Printf("Added %d\n", args[i])
 	}
