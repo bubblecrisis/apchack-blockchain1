@@ -90,7 +90,7 @@ func (t *SimpleChaincode) add(stub shim.ChaincodeStubInterface, args []string) (
 		return nil, errors.New("Entity not found " + args[0])
 	}
 	value, _ = strconv.Atoi(string(valueBytes))
-	delta, err = strconv.Atoi(args[2])
+	delta, err = strconv.Atoi(args[1])
 	value = value + delta
 	err = stub.PutState(args[0], []byte(strconv.Itoa(value)))
 	if err != nil {
@@ -114,7 +114,7 @@ func (t *SimpleChaincode) deduct(stub shim.ChaincodeStubInterface, args []string
 		return nil, errors.New("Entity not found " + args[0])
 	}
 	value, _ = strconv.Atoi(string(valueBytes))
-	delta, err = strconv.Atoi(args[2])
+	delta, err = strconv.Atoi(args[1])
 	value = value - delta
 	err = stub.PutState(args[0], []byte(strconv.Itoa(value)))
 	if err != nil {
